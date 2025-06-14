@@ -1,0 +1,107 @@
+<<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dormitory Booking</title>
+     <link rel="stylesheet" href="css/common.css">
+    <link rel="stylesheet" href="css/dormitory.css">
+</head>
+<body>
+<header>
+    <a href="index.html" class="logo-container">
+        <div class="header-logo">
+            <img src="360128199_664085315740175_3816861120284611948_n.jpg
+" alt="CUET Logo">
+        </div>
+        <div class="logo-text">IT Business Incubator</div>
+    </a>
+    <nav>
+        <ul>
+            <li><a href="index.html">Home</a></li>
+            <li><a href="about.html">About</a></li>
+            <li><a href="contact.html">Contact Us</a></li>
+            <li><a href="https://cuet.ac.bd">CUET</a></li>
+        </ul>
+    </nav>
+</header>
+<div class ="container">
+    <div class="card">
+        <h1>Application for Dormitory Accomodation</h1>
+        <p>Please fill out the form for accomodation at the Dormitory of ITBI, CUET</p>
+        <form action ="confirmation.html"method= "post">
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="application_date">Date Of Application</label>
+                    <input type="date" id="application_date" name="application_date"required>
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group">
+                    <label for=" designation">Designation And Organization of Applicant</label>
+                    <input type="text" id="designation" name="designation"required>
+                </div>
+            </div>
+            <div classs="form-row">
+                <div class="form-group">
+                    <label for="applicant_name">Name Of Applicant</label>
+                    <input type="text" id="applicant_name" name="applicant_name"required>
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="contact_number">Contact Number Of Applicant</label>
+                    <input type="tel" id="contact_number" name="contact_number"required>
+                </div>
+            <div class="form-group">
+                <label for="guest_name">Name Of Guest</label>
+                <input type="test" id="guest_name" name="guest_name"required>
+            </div>
+         </div>
+          <div class="form-row">
+                    <div class="form-group">
+                        <label for="relation">Relation With the Applicant</label>
+                        <input type="text" id="relation" name="relation" required>
+                    </div>
+                </div>
+                
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="arrival_date">Date Of Arrival</label>
+                        <input type="date" id="arrival_date" name="arrival_date" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="departure_date">Date of Departure *</label>
+                        <input type="date" id="departure_date" name="departure_date" required>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Air Conditioned</label>
+                        <div style="margin-top: 0.5 rem;">
+                            <input type="radio" id="ac_yes" name="air_conditioned" value="yes" checked>
+                            <label for="ac_yes" style="display: inline;margin-right: 1 rem;">Yes</label>
+                            <input type ="radio" id="ac_no" name="air_conditioned" value="No">
+                            <label for="ac_no" style="display: inline;">No</label>
+                        </div>
+                    </div>
+                </div>
+                <div class="form group">
+                    <label>Personal Usage</label>
+                    <div style="margin-top: 0.5 rem;">
+                                    <input type="radio" id="personal_yes" name="personal_usage" value="yes" checked>
+                            <label for="personal_yes" style="display: inline; margin-right: 1rem;">YES</label>
+                            <input type="radio" id="personal_no" name="personal_usage" value="no">
+                            <label for="personal_no" style="display: inline;">NO</label>
+                        </div>
+                    </div>
+                </div>
+                <button type="submit" class="btn">Submit Now</button>
+        </form>
+    </div>
+</div>
+ <footer class="footer">
+        <p>&copy; 2025 IT Business Incubator, CUET. All rights reserved.</p>
+    </footer>
+</body>
+</html>

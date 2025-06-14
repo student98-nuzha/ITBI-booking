@@ -1,0 +1,53 @@
+<<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Director Panel</title>
+   <link rel="stylesheet" href="css/common.css">
+    <link rel="stylesheet" href="css/director-panel.css">
+</head>
+<body>
+<header>
+    <a href="index.html" class="logo-container">
+        <div class="header-logo">
+            <img src="360128199_664085315740175_3816861120284611948_n.jpg
+" alt="CUET Logo">
+        </div>
+        <div class="logo-text">IT Business Incubator</div>
+    </a>
+    <nav>
+        <ul>
+            <li><a href="index.html">Home</a></li>
+            <li><a href="about.html">About</a></li>
+            <li><a href="contact.html">Contact Us</a></li>
+            <li><a href="https://cuet.ac.bd">CUET</a></li>
+        </ul>
+    </nav>
+</header>
+    <div class="container">
+        <div class="card">
+            <h1>Director Panel</h1>
+            <h2>Pending Applications</h2>
+            <div class="application-list" id="pendingApplications">
+                <!-- Applications will be dynamically inserted here -->
+                <!-- Template for each application item  -->
+                <div class="application-item template" style="display: none;">
+                    <div class="application-info">
+                        <h3 class="applicant-name-date"></h3>
+                        <p class="booking-details"></p>
+                        <p class="approval-info"></p>
+                    </div>
+                    <div class="application-actions">
+                        <a href="#" class="btn details-btn">Details</a>
+                        <a href="#" class="btn btn-danger disapprove-btn">Disapprove</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+<footer class="footer">
+        <p>&copy; 2025 IT Business Incubator, CUET. All rights reserved.</p>
+    </footer>
+</body>
+</html>
