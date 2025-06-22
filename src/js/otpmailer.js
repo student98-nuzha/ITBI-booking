@@ -1,10 +1,8 @@
-// Initialize EmailJS 
 emailjs.init("_qxnq73OQAtlfdEkO");
 
 console.log("code was here")
 
 document.addEventListener('DOMContentLoaded', function () {
-  // ============ OTP SENDER PAGE ============
   const emailInput = document.getElementById('email');
   const form = document.querySelector('form');
 
@@ -38,7 +36,6 @@ document.addEventListener('DOMContentLoaded', function () {
       try {
         const otp = Math.floor(100000 + Math.random() * 900000).toString();
 
-        // Store OTP in Supabase
         await fetch("https://tjismtujphgldjuyfoek.supabase.co/rest/v1/OTPs", {
           method: "POST",
           headers: {
@@ -54,7 +51,6 @@ document.addEventListener('DOMContentLoaded', function () {
           })
         });
 
-        // Send OTP via EmailJS
         const response = await emailjs.send("service_8fz075n", "template_g64ielq", {
           to_email: email,
           otp_code: otp,
@@ -77,7 +73,6 @@ document.addEventListener('DOMContentLoaded', function () {
     });
   }
 
-  // ============ OTP VERIFICATION PAGE ============
   const otpInput = document.getElementById('verification-code');
   if (otpInput) {
     const urlParams = new URLSearchParams(window.location.search);
@@ -103,7 +98,6 @@ document.addEventListener('DOMContentLoaded', function () {
       const enteredOtp = otpInput.value.trim();
 
       try {
-        // Fetch the most recent OTP
         const response = await fetch(`https://tjismtujphgldjuyfoek.supabase.co/rest/v1/OTPs?email=eq.${encodeURIComponent(email)}&order=created_at.desc&limit=1&select=*`, {
           headers: {
             "apikey": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InRqaXNtdHVqcGhnbGRqdXlmb2VrIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTA0OTIyMzEsImV4cCI6MjA2NjA2ODIzMX0.WsNAKO2UCRRQffqD28jkCWQ7I4dKmFywfIMrTjI-8x8",
@@ -140,7 +134,6 @@ document.addEventListener('DOMContentLoaded', function () {
         if (enteredOtp === otpData.otp) {
           console.log("✅ OTP verified");
 
-          // Mark as verified
           const patchResponse = await fetch(`https://tjismtujphgldjuyfoek.supabase.co/rest/v1/OTPs?id=eq.${otpData.id}`, {
             method: "PATCH",
             headers: {
