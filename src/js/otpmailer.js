@@ -174,7 +174,10 @@ document.addEventListener('DOMContentLoaded', function () {
           if (patchResponse.ok) {
             try {
               const userType = await getUserType(email);
+              
               localStorage.setItem('userType', userType);
+              localStorage.setItem('userEmail', email);
+
               window.location.href = 'booking.html';
             } catch (error) {
               console.error('Error determining user type:', error);
