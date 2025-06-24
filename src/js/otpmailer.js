@@ -93,6 +93,34 @@ document.addEventListener('DOMContentLoaded', function () {
       form.insertBefore(emailDisplay, form.querySelector('.form-group'));
     }
 
+    // Function to determine userType based on email
+    async function getUserType(email) {
+      const studentPattern = /^u\d{7}@student\.cuet\.ac\.bd$/i;
+      if (studentPattern.test(email)) {
+        return 'student';
+      } else {
+        const teacherResponse = await fetch(`https://tjismtujphgldjuyfoek.supabase.co/rest/v1/Teachers?t_email=eq.${encodeURIComponent(email)}&select=t_status`, {
+          headers: {
+            "apikey": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InRqaXNtdHVqcGhnbGRqdXlmb2VrIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTA0OTIyMzEsImV4cCI6MjA2NjA2ODIzMX0.WsNAKO2UCRRQffqD28jkCWQ7I4dKmFywfIMrTjI-8x8",
+            "Authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InRqaXNtdHVqcGhnbGRqdXlmb2VrIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTA0OTIyMzEsImV4cCI6MjA2NjA2ODIzMX0.WsNAKO2UCRRQffqD28jkCWQ7I4dKmFywfIMrTjI-8x8"
+          }
+        });
+        if (teacherResponse.ok) {
+          const data = await teacherResponse.json();
+          if (data.length > 0) {
+            const t_status = data[0].t_status;
+            if (t_status === 0) return 'teacher';
+            else if (t_status === 1) return 'director';
+            else if (t_status === 2) return 'admin';
+          } else {
+            return 'staff';
+          }
+        } else {
+          throw new Error('Failed to fetch teacher data');
+        }
+      }
+    }
+
     form.addEventListener('submit', async function (event) {
       event.preventDefault();
       const enteredOtp = otpInput.value.trim();
@@ -117,7 +145,6 @@ document.addEventListener('DOMContentLoaded', function () {
         }
 
         const otpData = data[0];
-        console.log("OTP Data:", otpData);
 
         const now = new Date();
         if (now > new Date(otpData.expires_at)) {
@@ -145,7 +172,18 @@ document.addEventListener('DOMContentLoaded', function () {
           });
 
           if (patchResponse.ok) {
-            window.location.href = 'booking.html';
+            try {
+              const userType = await getUserType(email);
+              localStorage.setItem('userType', userType);
+              window.location.href = 'booking.html';
+            } catch (error) {
+              console.error('Error determining user type:', error);
+              errorMessage.textContent = 'Failed to determine user type. Please try again.';
+              errorMessage.style.display = 'block';
+              submitButton.disabled = false;
+              submitButton.textContent = originalButtonText;
+              return;
+            }
           } else {
             console.error('Failed to update OTP verification status');
             errorMessage.textContent = 'Verification failed. Please try again.';
