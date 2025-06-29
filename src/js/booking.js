@@ -23,7 +23,6 @@ document.addEventListener('DOMContentLoaded', async () => {
       card.className = 'request-item';
       card.setAttribute('data-badge', req.badge);
 
-      // Header
       const header = document.createElement('div');
       header.className = 'request-header';
       header.innerHTML = `
@@ -32,7 +31,6 @@ document.addEventListener('DOMContentLoaded', async () => {
       `;
       card.append(header);
 
-      // Details
       const details = document.createElement('div');
       details.className = 'request-details';
       details.innerHTML = req.badge === 'AUD'
@@ -40,7 +38,6 @@ document.addEventListener('DOMContentLoaded', async () => {
         : `<p>Status: ${getStatusText(req.Req_Status)}</p><p>Departure: ${req.Dep_Date}</p>`;
       card.append(details);
 
-      // Toggle expand
       card.addEventListener('click', () => card.classList.toggle('expanded'));
 
       bookingList.append(card);
@@ -48,7 +45,6 @@ document.addEventListener('DOMContentLoaded', async () => {
   }
 });
 
-// Helper to fetch from Supabase REST
 async function fetchRequests(table, email) {
   const supabaseUrl = 'https://tjismtujphgldjuyfoek.supabase.co';
   const anonKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InRqaXNtdHVqcGhnbGRqdXlmb2VrIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTA0OTIyMzEsImV4cCI6MjA2NjA2ODIzMX0.WsNAKO2UCRRQffqD28jkCWQ7I4dKmFywfIMrTjI-8x8';
