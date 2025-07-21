@@ -1,53 +1,171 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Director Panel</title>
-   <link rel="stylesheet" href="../css/common.css">
-    <link rel="stylesheet" href="../css/director-panel.css">
-    <link rel="shortcut icon" href="../../assets/cuetlogo.png" type="image/x-icon">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Director Panel</title>
+  <link rel="stylesheet" href="../css/common.css">
+  <link rel="stylesheet" href="../css/director-panel.css">
+  <link rel="shortcut icon" href="../../assets/cuetlogo.png" type="image/x-icon">
+  <style>
+    .container {
+      max-width: 1000px;
+      margin: auto;
+      padding: 20px;
+    }
+
+    .card h1 {
+      text-align: center;
+      margin-bottom: 30px;
+    }
+
+    .request-section {
+      margin-bottom: 40px;
+    }
+
+    .request-section h2 {
+      margin-bottom: 10px;
+    }
+
+    .scroll-buttons {
+      display: flex;
+      justify-content: flex-end;
+      gap: 10px;
+      margin-bottom: 5px;
+    }
+
+    .scroll-buttons button {
+      padding: 5px 10px;
+      cursor: pointer;
+    }
+
+    .application-list {
+      max-height: 300px;
+      overflow-y: auto;
+      border: 1px solid #ccc;
+      padding: 10px;
+      border-radius: 6px;
+      background-color: #f9f9f9;
+    }
+
+    .application-item {
+      position: relative;
+      background: #ffffff;
+      border-left: 4px solid #999;
+      border-radius: 6px;
+      padding: 12px;
+      margin-bottom: 12px;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+    }
+
+    .status-dot {
+      position: absolute;
+      top: 8px;
+      right: 8px;
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+    }
+
+    .application-info h3 {
+      margin: 0 0 5px;
+      font-size: 18px;
+    }
+
+    .application-info p {
+      margin: 0;
+      font-size: 14px;
+      color: #555;
+    }
+
+    .application-actions {
+      margin-top: 10px;
+    }
+
+    .application-actions .btn {
+      margin-right: 10px;
+      padding: 5px 12px;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+
+    .btn-success {
+      background-color: #4CAF50;
+      color: white;
+    }
+
+    .btn-danger {
+      background-color: #f44336;
+      color: white;
+    }
+
+    .btn {
+      background-color: #2196F3;
+      color: white;
+    }
+  </style>
 </head>
 <body>
 <header>
-    <a href="index.html" class="logo-container">
-        <div class="header-logo">
-            <img src="../../assets/cuetlogo.png" alt="CUET Logo">
-        </div>
-        <div class="logo-text">IT Business Incubator</div>
-    </a>
-    <nav>
-        <ul>
-            <li><a href="index.html">Home</a></li>
-            <li><a href="about.html">About</a></li>
-            <li><a href="contact.html">Contact Us</a></li>
-            <li><a href="https://cuet.ac.bd">CUET</a></li>
-        </ul>
-    </nav>
-</header>
-    <div class="container">
-        <div class="card">
-            <h1>Director Panel</h1>
-            <h2>Pending Applications</h2>
-            <div class="application-list" id="pendingApplications">
-                <!-- Applications will be dynamically inserted here -->
-                <!-- Template for each application item  -->
-                <div class="application-item template" style="display: none;">
-                    <div class="application-info">
-                        <h3 class="applicant-name-date"></h3>
-                        <p class="booking-details"></p>
-                        <p class="approval-info"></p>
-                    </div>
-                    <div class="application-actions">
-                        <a href="#" class="btn details-btn">Details</a>
-                        <a href="#" class="btn btn-danger disapprove-btn">Disapprove</a>
-                    </div>
-                </div>
-            </div>
-        </div>
+  <a href="index.html" class="logo-container">
+    <div class="header-logo">
+      <img src="../../assets/cuetlogo.png" alt="CUET Logo">
     </div>
+    <div class="logo-text">IT Business Incubator</div>
+  </a>
+  <nav>
+    <ul>
+      <li><a href="index.html">Home</a></li>
+      <li><a href="about.html">About</a></li>
+      <li><a href="contact.html">Contact Us</a></li>
+      <li><a href="https://cuet.ac.bd">CUET</a></li>
+    </ul>
+  </nav>
+</header>
+
+<div class="container">
+  <div class="card">
+    <h1>Director Panel</h1>
+
+    <!-- Auditorium Requests -->
+    <div class="request-section">
+      <h2>Auditorium Requests</h2>
+      <div class="scroll-buttons">
+        <button class="scroll-up">↑</button>
+        <button class="scroll-down">↓</button>
+      </div>
+      <div class="application-list" id="auditoriumRequests">
+        <!-- Items will be injected here -->
+      </div>
+    </div>
+
+    <!-- Dormitory Requests -->
+    <div class="request-section">
+      <h2>Dormitory Requests</h2>
+      <div class="scroll-buttons">
+        <button class="scroll-up">↑</button>
+        <button class="scroll-down">↓</button>
+      </div>
+      <div class="application-list" id="dormitoryRequests">
+        <!-- Items will be injected here -->
+      </div>
+    </div>
+
+    <!-- Approval History -->
+    <div class="request-section">
+      <h2>Approval History</h2>
+      <div class="application-list" id="approvalHistory">
+        <!-- Approved items will go here -->
+      </div>
+    </div>
+  </div>
+</div>
+
 <footer class="footer">
-        <p>&copy; 2025 IT Business Incubator, CUET. All rights reserved.</p>
-    </footer>
+  <p>&copy; 2025 IT Business Incubator, CUET. All rights reserved.</p>
+</footer>
+
+<script src="../js/director.js"></script>
 </body>
 </html>

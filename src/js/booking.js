@@ -154,6 +154,9 @@ document.addEventListener('DOMContentLoaded', async () => {
   } else if (userType === 'admin') {
     li.innerHTML = `<a href="admin-panel.html">Admin Panel</a>`;
     nav.appendChild(li);
+  } else if (userType === 'teacher') {
+    li.innerHTML = `<a href="student-panel.html">Teacher Panel</a>`;
+    nav.appendChild(li);
   }
 });
 
