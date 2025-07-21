@@ -1,11 +1,6 @@
-// auditorium.js
-// Ensure you include this in HTML before:<script src="../js/auditorium.js"></script>
-
-// Supabase REST API credentials
 const SUPABASE_URL = 'https://tjismtujphgldjuyfoek.supabase.co';
 const API_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InRqaXNtdHVqcGhnbGRqdXlmb2VrIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTA0OTIyMzEsImV4cCI6MjA2NjA2ODIzMX0.WsNAKO2UCRRQffqD28jkCWQ7I4dKmFywfIMrTjI-8x8';
 
-// Common fetch headers for Supabase REST
 const HEADERS = {
   'Content-Type': 'application/json',
   'apikey': API_KEY,
@@ -19,13 +14,11 @@ document.addEventListener('DOMContentLoaded', () => {
   const form = document.querySelector('form');
   const submitBtn = form.querySelector('button[type="submit"]');
 
-  // Auto-fill email field
   if (userEmail) {
     const emailInput = document.getElementById('email');
     if (emailInput) emailInput.value = userEmail;
   }
 
-  // Dynamically add "Referred by" for students/staff
   if (userType === 'student' || userType === 'staff') {
     const wrapper = document.createElement('div');
     wrapper.className = 'form-group';
@@ -49,7 +42,6 @@ document.addEventListener('DOMContentLoaded', () => {
   form.addEventListener('submit', async (e) => {
     e.preventDefault();
 
-    // Collect form data
     const data = {
       Date_of_Application: document.getElementById('application_date').value,
       Desg_Org: document.getElementById('Designation').value.trim(),
@@ -66,22 +58,26 @@ document.addEventListener('DOMContentLoaded', () => {
       Req_Status: 0
     };
 
-    // Handle referred_by lookup if present
     const refEl = document.getElementById('referred_by');
     if (refEl) {
       const email = refEl.value.trim();
-      // GET teacher by email
+
       const url = `${SUPABASE_URL}/rest/v1/Teachers?t_email=eq.${encodeURIComponent(email)}`;
       const resp = await fetch(url, { headers: HEADERS });
       const teachers = await resp.json();
       if (!Array.isArray(teachers) || teachers.length === 0) {
-        alert('Invalid referred-by email.');
+        const errorDiv = document.createElement('div');
+        errorDiv.className = 'error-message';
+        errorDiv.style.color = 'red';
+        errorDiv.style.fontSize = '0.8em';
+        errorDiv.style.marginTop = '5px';
+        errorDiv.textContent = 'Invalid referred-by email.';
+        refEl.parentElement.appendChild(errorDiv);
         return;
       }
       data.Referred_By = teachers[0].t_id;
     }
 
-    // POST to AudReq table
     const insertUrl = `${SUPABASE_URL}/rest/v1/AudReq`;
     const insertResp = await fetch(insertUrl, {
       method: 'POST',
@@ -91,11 +87,16 @@ document.addEventListener('DOMContentLoaded', () => {
 
     if (!insertResp.ok) {
       console.error('Insert failed:', await insertResp.text());
-      alert('Submission failed. Please try again.');
+      const errorDiv = document.createElement('div');
+      errorDiv.className = 'error-message';
+      errorDiv.style.color = 'red';
+      errorDiv.style.fontSize = '0.8em';
+      errorDiv.style.marginTop = '5px';
+      errorDiv.textContent = 'Submission failed. Please try again.';
+      refEl ? refEl.parentElement.appendChild(errorDiv) : form.appendChild(errorDiv);
       return;
     }
 
-    // Redirect on success
     window.location.href = 'booking.html';
   });
 });

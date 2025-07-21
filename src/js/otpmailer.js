@@ -1,7 +1,5 @@
 emailjs.init("_qxnq73OQAtlfdEkO");
 
-console.log("code was here")
-
 document.addEventListener('DOMContentLoaded', function () {
   const emailInput = document.getElementById('email');
   const form = document.querySelector('form');
@@ -93,7 +91,7 @@ document.addEventListener('DOMContentLoaded', function () {
       form.insertBefore(emailDisplay, form.querySelector('.form-group'));
     }
 
-    // Function to determine userType based on email
+
     async function getUserType(email) {
       const studentPattern = /^u\d{7}@student\.cuet\.ac\.bd$/i;
       if (studentPattern.test(email)) {
@@ -159,7 +157,7 @@ document.addEventListener('DOMContentLoaded', function () {
         errorMessage.style.display = 'none';
 
         if (enteredOtp === otpData.otp) {
-          console.log("✅ OTP verified");
+          console.log("OTP verified");
 
           const patchResponse = await fetch(`https://tjismtujphgldjuyfoek.supabase.co/rest/v1/OTPs?id=eq.${otpData.id}`, {
             method: "PATCH",
@@ -193,7 +191,7 @@ document.addEventListener('DOMContentLoaded', function () {
             errorMessage.style.display = 'block';
           }
         } else {
-          console.log("❌ Invalid OTP");
+          console.log("Invalid OTP");
           errorMessage.textContent = 'Invalid verification code. Please try again.';
           errorMessage.style.display = 'block';
         }

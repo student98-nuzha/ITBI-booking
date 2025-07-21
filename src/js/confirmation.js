@@ -8,7 +8,6 @@ const HEADERS = {
   'Prefer': 'return=representation'
 };
 
-// Replace with the actual ID of the record you want to export
 const applicationId = 1;
 
 async function fetchApplicationData(id) {
@@ -18,7 +17,7 @@ async function fetchApplicationData(id) {
   });
 
   const data = await response.json();
-  return data[0]; // assuming only one row
+  return data[0]; 
 }
 
 function populateApplicationHTML(app) {
