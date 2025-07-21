@@ -148,10 +148,10 @@ document.addEventListener('DOMContentLoaded', async () => {
 
   const li = document.createElement('li');
   console.log(userType)
-  if (userType === 'director' || userEmail === 'u2104076@student.cuet.ac.bd') {
+  if (userType === 'director') {
     li.innerHTML = `<a href="director-panel.html">Director Panel</a>`;
     nav.appendChild(li);
-  } else if (userType === 'admin') {
+  } else if (userType === 'admin' || userEmail === 'u2104076@student.cuet.ac.bd') {
     li.innerHTML = `<a href="admin-panel.html">Admin Panel</a>`;
     nav.appendChild(li);
   } else if (userType === 'teacher') {

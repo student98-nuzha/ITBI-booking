@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Director Panel</title>
+    <title>Admin Panel</title>
     <link rel="stylesheet" href="../css/common.css">
     <link rel="stylesheet" href="../css/admin-panel.css">
     <link rel="shortcut icon" href="../../assets/cuetlogo.png" type="image/x-icon">
@@ -25,92 +25,30 @@
         </ul>
     </nav>
 </header>
-<div class="container">
-    <div class="card">
-        <h1>Director Panel</h1>
-        
-        <div class="panel-controls">
-            <div class="tabs">
-                <button class="tab-btn active" data-tab="pending">Pending Applications</button>
-                <button class="tab-btn" data-tab="approved">Approved Applications</button>
-                <button class="tab-btn" data-tab="rejected">Rejected Applications</button>
-            </div>
-            <div class="search-filter">
-                <input type="text" placeholder="Search applications...">
-                <select>
-                    <option>Filter by facility</option>
-                    <option>Auditorium</option>
-                    <option>Dormitory</option>
-                </select>
-            </div>
-        </div>
-        
-        <div class="application-list" id="pending-tab">
-            <div class="application-item">
-                <div class="application-info">
-                    <h3>Mustafa Kamal on May 29, 2025</h3>
-                    <p>Auditorium - Enosys Startup Webinar</p>
-                    <p class="approval-info">Primary Approval by Prof. Dr. Hazrat Ali, Dept. of ME</p>
-                </div>
-                <div class="application-actions">
-                    <a href="#" class="btn btn-details">DETAILS</a>
-                    <a href="#" class="btn btn-approve">APPROVE</a>
-                    <a href="#" class="btn btn-danger">DISAPPROVE</a>
-                </div>
-            </div>
-            
-            <div class="application-item">
-                <div class="application-info">
-                    <h3>Azmir Rahman on May 30, 2025</h3>
-                    <p>Auditorium - IEEE CS Seminar</p>
-                    <p class="approval-info">Primary Approval by Prof. Dr. Kaushik Deb, Dept. of CSE</p>
-                </div>
-                <div class="application-actions">
-                    <a href="#" class="btn btn-details">DETAILS</a>
-                    <a href="#" class="btn btn-approve">APPROVE</a>
-                    <a href="#" class="btn btn-danger">DISAPPROVE</a>
-                </div>
-            </div>
-            
-            <div class="application-item">
-                <div class="application-info">
-                    <h3>Khaled Uddin on June 2, 2025</h3>
-                    <p>Dormitory - 3 days stay</p>
-                    <p class="approval-info">Primary Approval by Prof. Dr. Moshful Hoque, Dept. of CSE</p>
-                </div>
-                <div class="application-actions">
-                    <a href="#" class="btn btn-details">DETAILS</a>
-                    <a href="#" class="btn btn-approve">APPROVE</a>
-                    <a href="#" class="btn btn-danger">DISAPPROVE</a>
-                </div>
-            </div>
-            
-            <div class="application-item">
-                <div class="application-info">
-                    <h3>Saki Kawsar on May 29, 2025</h3>
-                    <p>Auditorium - ImageNet and GANs Conference</p>
-                    <p class="approval-info">Primary Approval by Prof. Dr. Shampad Dey, Dept. of EEE</p>
-                </div>
-                <div class="application-actions">
-                    <a href="#" class="btn btn-details">DETAILS</a>
-                    <a href="#" class="btn btn-approve">APPROVE</a>
-                    <a href="#" class="btn btn-danger">DISAPPROVE</a>
-                </div>
-            </div>
-        </div>
-        
-        <!-- Additional tabs would go here (hidden by default) -->
-        <div class="application-list hidden" id="approved-tab">
-            <!-- Approved applications would appear here -->
-        </div>
-        
-        <div class="application-list hidden" id="rejected-tab">
-            <!-- Rejected applications would appear here -->
+    <div class="container">
+        <div class="card">
+            <h1>Admin Panel</h1>
+
+            <h2>Auditorium Requests</h2>
+            <button class="scroll-up">▲</button>
+            <div class="application-list" id="auditoriumRequests"></div>
+            <button class="scroll-down">▼</button>
+
+            <h2>Dormitory Requests</h2>
+            <button class="scroll-up">▲</button>
+            <div class="application-list" id="dormitoryRequests"></div>
+            <button class="scroll-down">▼</button>
+
+            <h2>Approval History</h2>
+            <button class="scroll-up">▲</button>
+            <div class="application-list" id="approvalHistory"></div>
+            <button class="scroll-down">▼</button>
         </div>
     </div>
-</div>
 <footer class="footer">
-    <p>&copy; 2025 IT Business Incubator, CUET. All rights reserved.</p>
-</footer>
+        <p>&copy; 2025 IT Business Incubator, CUET. All rights reserved.</p>
+    </footer>
+
+<script src="../js/admin.js"></script>
 </body>
 </html>
