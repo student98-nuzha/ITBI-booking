@@ -77,12 +77,18 @@ document.addEventListener('DOMContentLoaded', () => {
       headers: HEADERS,
       body: JSON.stringify(data)
     });
+    const result = await insertResp.json();
 
-    if (!insertResp.ok) {
-      console.error('Insert failed:', await insertResp.text());
+    if (!insertResp.ok || !result[0] || !result[0].DReqID) {
+      console.error('Insert failed:', result);
       alert('Submission failed. Please try again.');
       return;
     }
+
+    // ✅ Store application ID in sessionStorage
+    sessionStorage.setItem('applicationId', result[0].DReqID);
+
+    
     
     window.location.href = 'confirmation.html';
   });

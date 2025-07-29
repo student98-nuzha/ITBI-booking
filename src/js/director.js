@@ -43,20 +43,27 @@ document.addEventListener('DOMContentLoaded', async () => {
     const date = req.Date_of_Application;
 
     div.innerHTML = `
-      <div class="status-dot" style="background:${statusColor}; position:absolute; top:5px; right:5px; width:12px; height:12px; border-radius:50%;"></div>
+      <div class="status-dot" style="background:${statusColor};"></div>
       <div class="application-info">
         <h3>${name} - ${date}</h3>
         <p>${type === 'aud' ? req.Event_Name : req.Guest_Name}</p>
       </div>
       <div class="application-actions">
-        <button class="btn">View Details</button>
-        ${req.Req_Status === 0 || req.Req_Status === 1 ? `
-          <button class="btn btn-success approve-btn">Approve</button>
-          <button class="btn btn-danger disapprove-btn">Disapprove</button>` : ''}
-        ${req.Req_Status === 2 || req.Req_Status === -1 ? `
-          <button class="btn btn-danger delete-btn">Delete</button>` : ''}
+        <button class="btn view-details-btn">View Details</button>
+        <button class="btn btn-success approve-btn">Approve</button>
+        <button class="btn btn-danger disapprove-btn">Disapprove</button>
+      </div>
+      <div class="details-panel" style="display: none; margin-top: 10px; padding: 10px; background: #f5f5f5; border-radius: 4px;">
+        ${generateDetailsList(req, type)}
       </div>
     `;
+
+    // Add view details handler
+    div.querySelector('.view-details-btn').addEventListener('click', () => {
+      const detailsPanel = div.querySelector('.details-panel');
+      const isVisible = detailsPanel.style.display === 'block';
+      detailsPanel.style.display = isVisible ? 'none' : 'block';
+    });
 
     // Approve button
     div.querySelector('.approve-btn')?.addEventListener('click', async () => {
@@ -81,6 +88,40 @@ document.addEventListener('DOMContentLoaded', async () => {
     });
 
     return div;
+  }
+
+  function generateDetailsList(req, type) {
+    if (type === 'aud') {
+      return `
+        <ul style="list-style: none; padding: 0; margin: 0;">
+          <li><strong>Event Name:</strong> ${req.Event_Name}</li>
+          <li><strong>Applicant:</strong> ${req.Name_of_Applicant_or_Org}</li>
+          <li><strong>Designation:</strong> ${req.Desg_Org}</li>
+          <li><strong>Email:</strong> ${req.Email}</li>
+          <li><strong>Contact:</strong> ${req.Contact_Num}</li>
+          <li><strong>Event Date:</strong> ${req.Date_of_Event}</li>
+          <li><strong>Time:</strong> ${req.St_Time} - ${req.En_Time}</li>
+          <li><strong>Expected Attendees:</strong> ${req.Exp_Attendee_Count}</li>
+          <li><strong>Event Description:</strong> ${req.Event_Desc || 'N/A'}</li>
+          <li><strong>Special Requirements:</strong> ${req.Special_Requirements || 'None'}</li>
+        </ul>
+      `;
+    } else {
+      return `
+        <ul style="list-style: none; padding: 0; margin: 0;">
+          <li><strong>Guest Name:</strong> ${req.Guest_Name}</li>
+          <li><strong>Applicant:</strong> ${req.Name_of_Applicant_or_Org}</li>
+          <li><strong>Designation:</strong> ${req.Desg_Org}</li>
+          <li><strong>Email:</strong> ${req.Email}</li>
+          <li><strong>Contact:</strong> ${req.Contact_Num}</li>
+          <li><strong>Relation:</strong> ${req.Rel_with_Applicant}</li>
+          <li><strong>Arrival Date:</strong> ${req.Arr_Date}</li>
+          <li><strong>Departure Date:</strong> ${req.Dep_Date}</li>
+          <li><strong>Room Type:</strong> ${req.Air_Con ? 'Air Conditioned' : 'Non-AC'}</li>
+          <li><strong>Usage:</strong> ${req.Personal ? 'Personal' : 'Official'}</li>
+        </ul>
+      `;
+    }
   }
 
   function addToHistory(req, type, status) {
