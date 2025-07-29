@@ -298,7 +298,7 @@ async function fetchRequests(table, email) {
 
 async function fetchPendingRequests(table) {
   const supabaseUrl = 'https://tjismtujphgldjuyfoek.supabase.co';
-  const anonKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InRqaXNtdHVqcGhnbGRqdXlmb2VrIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTA0OTIyMzEsImV4cCI6MjA2NjA2ODIzMX0.WsNAKO2UCRRQffqD28jkCWQ7I4dKmFywfIMrTjI-8x8';
+  const anonKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InRqaXNtdHVqcGhnbGRqdXlmb2VrIiwicm9zZSI6ImFub24iLCJpYXQiOjE3NTA0OTIyMzEsImV4cCI6MjA2NjA2ODIzMX0.WsNAKO2UCRRQffqD28jkCWQ7I4dKmFywfIMrTjI-8x8';
   const resp = await fetch(
     `${supabaseUrl}/rest/v1/${table}?Req_Status=eq.0`, {
       headers: { apikey: anonKey, Authorization: `Bearer ${anonKey}` }
@@ -309,10 +309,18 @@ async function fetchPendingRequests(table) {
 
 async function fetchPendingRequestsForUser(table, email) {
   const supabaseUrl = 'https://tjismtujphgldjuyfoek.supabase.co';
-  const anonKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InRqaXNtdHVqcGhnbGRqdXlmb2VrIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTA0OTIyMzEsImV4cCI6MjA2NjA2ODIzMX0.WsNAKO2UCRRQffqD28jkCWQ7I4dKmFywfIMrTjI-8x8';
-  const query = `or=(Referred_By.eq.${encodeURIComponent(email)},Email.eq.${encodeURIComponent(email)})`;
+  const anonKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InRqaXNtdHVqcGhnbGRqdXlmb2VrIiwicm9zZSI6ImFub24iLCJpYXQiOjE3NTA0OTIyMzEsImV4cCI6MjA2NjA2ODIzMX0.WsNAKO2UCRRQffqD28jkCWQ7I4dKmFywfIMrTjI-8x8';
+
+  // Check if user is a teacher or the special student
+  const isTeacherResult = await isTeacher(email);
+  const isSpecialStudent = email === 'u2104094@student.cuet.ac.bd';
+
+  if (!isTeacherResult && !isSpecialStudent) {
+    return [];
+  }
+
   const resp = await fetch(
-    `${supabaseUrl}/rest/v1/${table}?Req_Status=eq.0&${query}`, {
+    `${supabaseUrl}/rest/v1/${table}?Req_Status=eq.0`, {
       headers: { 
         apikey: anonKey, 
         Authorization: `Bearer ${anonKey}`,
@@ -320,6 +328,7 @@ async function fetchPendingRequestsForUser(table, email) {
       }
     }
   );
+
   if (!resp.ok) {
     console.error(`Failed to fetch pending requests for ${table}:`, resp.statusText);
     return [];
@@ -329,7 +338,7 @@ async function fetchPendingRequestsForUser(table, email) {
 
 async function isTeacher(email) {
   const supabaseUrl = 'https://tjismtujphgldjuyfoek.supabase.co';
-  const anonKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InRqaXNtdHVqcGhnbGRqdXlmb2VrIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTA0OTIyMzEsImV4cCI6MjA2NjA2ODIzMX0.WsNAKO2UCRRQffqD28jkCWQ7I4dKmFywfIMrTjI-8x8';
+  const anonKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InRqaXNtdHVqcGhnbGRqdXlmb2VrIiwicm9zZSI6ImFub24iLCJpYXQiOjE3NTA0OTIyMzEsImV4cCI6MjA2NjA2ODIzMX0.WsNAKO2UCRRQffqD28jkCWQ7I4dKmFywfIMrTjI-8x8';
   const resp = await fetch(
     `${supabaseUrl}/rest/v1/teachers?Email=eq.${encodeURIComponent(email)}`, {
       headers: { apikey: anonKey, Authorization: `Bearer ${anonKey}` }
@@ -344,7 +353,7 @@ async function isTeacher(email) {
 
 async function deleteRequest(table, idField, id) {
   const supabaseUrl = 'https://tjismtujphgldjuyfoek.supabase.co';
-  const anonKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InRqaXNtdHVqcGhnbGRqdXlmb2VrIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTA0OTIyMzEsImV4cCI6MjA2NjA2ODIzMX0.WsNAKO2UCRRQffqD28jkCWQ7I4dKmFywfIMrTjI-8x8';
+  const anonKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InRqaXNtdHVqcGhnbGRqdXlmb2VrIiwicm9zZSI6ImFub24iLCJpYXQiOjE3NTA0OTIyMzEsImV4cCI6MjA2NjA2ODIzMX0.WsNAKO2UCRRQffqD28jkCWQ7I4dKmFywfIMrTjI-8x8';
   const resp = await fetch(
     `${supabaseUrl}/rest/v1/${table}?${idField}=eq.${id}`, {
       method: 'DELETE',
@@ -356,7 +365,7 @@ async function deleteRequest(table, idField, id) {
 
 async function updateRequestStatus(table, idField, id, status) {
   const supabaseUrl = 'https://tjismtujphgldjuyfoek.supabase.co';
-  const anonKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InRqaXNtdHVqcGhnbGRqdXlmb2VrIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTA0OTIyMzEsImV4cCI6MjA2NjA2ODIzMX0.WsNAKO2UCRRQffqD28jkCWQ7I4dKmFywfIMrTjI-8x8';
+  const anonKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InRqaXNtdHVqcGhnbGRqdXlmb2VrIiwicm9zZSI6ImFub24iLCJpYXQiOjE3NTA0OTIyMzEsImV4cCI6MjA2NjA2ODIzMX0.WsNAKO2UCRRQffqD28jkCWQ7I4dKmFywfIMrTjI-8x8';
   const resp = await fetch(
     `${supabaseUrl}/rest/v1/${table}?${idField}=eq.${id}`, {
       method: 'PATCH',
@@ -382,5 +391,5 @@ function viewRequestDetails(table, id) {
 }
 
 function getStatusText(s) {
-  return { 0: 'Pending', 1: 'Referral Approved', 2: 'Rejected' }[s] || 'Unknown';
+  return { 0: 'Pending', 1: 'Referral Approved', 2: 'Director approved',3:'Final approved' }[s] || 'Rejected';
 }
